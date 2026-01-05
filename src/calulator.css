@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🌈 Background */
+.calc-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f4037, #99f2c8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 🧮 Calculator Body */
+.calculator {
+  width: 100%;
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 22px;
+  background: rgba(30, 30, 30, 0.75);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 15px rgba(0,255,153,0.4),
+    0 0 30px rgba(255,149,0,0.3),
+    0 0 60px rgba(0,195,255,0.3);
+  animation:
+    fadeIn 0.6s ease,
+    float 4s ease-in-out infinite,
+    borderRGB 6s linear infinite;
+  border: 3px solid transparent;
+}
+
+/* 🌈 RGB Border */
+@keyframes borderRGB {
+  0% { border-color: #00ff99; }
+  33% { border-color: #00c3ff; }
+  66% { border-color: #ff9500; }
+  100% { border-color: #00ff99; }
+}
+
+/* Floating */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📺 DISPLAY */
+.calc-display {
+  width: 100%;
+  height: 60px;
+  background: #000;
+  color: #00ff99;
+  font-size: 28px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: right;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  position: relative;
+  animation: displayPop 0.15s ease;
+}
+
+/* Cursor */
+.calc-display::after {
+  content: "|";
+  margin-left: 4px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Typing pop */
+@keyframes displayPop {
+  from { transform: scale(1.05); }
+  to { transform: scale(1); }
+}
+
+/* 🔆 Screen ON Glow */
+.screen-on {
+  box-shadow:
+    0 0 10px #00ff99,
+    0 0 30px #00ff99,
+    inset 0 0 12px rgba(0,255,153,0.8);
+  animation: glowPulse 1.6s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from {
+    box-shadow:
+      0 0 8px #00ff99,
+      0 0 18px #00ff99;
+  }
+  to {
+    box-shadow:
+      0 0 16px #00ff99,
+      0 0 40px #00ff99;
+  }
+}
+
+/* 🔘 Buttons Grid */
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* 🔘 Button Style */
+.calc-buttons button {
+  height: 55px;
+  font-size: 18px;
+  border-radius: 14px;
+  border: none;
+  background: #2f2f2f;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.15s ease;
+  box-shadow:
+    inset -2px -2px 4px rgba(255,255,255,0.1),
+    inset 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+/* Hover */
+.calc-buttons button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+}
+
+/* Press */
+.calc-buttons button:active {
+  transform: scale(0.9);
+  box-shadow:
+    inset 4px 4px 8px rgba(0,0,0,0.9),
+    inset -2px -2px 6px rgba(255,255,255,0.1);
+}
+
+/* Ripple */
+.calc-buttons button::after {
+  content: "";
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(255,255,255,0.35) 10%, transparent 60%);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.calc-buttons button:active::after {
+  opacity: 1;
+  transform: scale(0);
+}
+
+/* Disabled */
+.calc-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Operator */
+.op {
+  background: #ff9500;
+  animation: softBlink 3s infinite;
+}
+
+/* Equal */
+.equal {
+  background: #34c759;
+  animation: softBlink 2s infinite;
+}
+
+@keyframes softBlink {
+  
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
+}
+
+/* 0 button */
+.zero {
+  grid-column: span 2;
+}
+
+/* 🔌 Power Buttons */
+.power {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.power button {
+  width: 48%;
+  height: 45px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.on {
+  background: #28a745;
+}
+
+.off {
+  background: #dc3545;
+}
+
+.on:hover,
+.off:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* 🔆 Glow Types */
+.number { box-shadow: 0 0 15px #00ff99; }
+.operator { box-shadow: 0 0 15px #ff9500; }
+.result { box-shadow: 0 0 20px #34c759; }
+
+/* 📱 Mobile */
+@media (max-width: 480px) {
+  .calculator { max-width: 100%; }
+}
+
+/* 📊 Tablet */
+@media (min-width: 768px) {
+  .calculator { max-width: 380px; }
+}
+
+/* 💻 Desktop */
+@media (min-width: 1024px) {
+  .calculator { max-width: 360px; }
+}
